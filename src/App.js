@@ -14,9 +14,15 @@ class App extends Component {
     }
 
     render() {
+        const { gifts } = this.state;
         return (
             <div>
                 <h2>Gift Giver</h2>
+                <ul className="gift-list">
+                    {
+                        gifts.map(({ id }) => <li key={id}>{id}</li>)
+                    }
+                </ul>
                 <Button className="btn-add" onClick={this.addGift}>Add Gift</Button>
             </div>
         )
