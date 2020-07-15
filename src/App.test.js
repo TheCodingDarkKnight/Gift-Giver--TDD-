@@ -18,6 +18,7 @@ describe("App", () => {
     })
 
     describe("When clicking `add-button`", () => {
+        const id = 1;
         beforeEach(() => {
             app.find(".btn-add").simulate("click");
         });
@@ -27,7 +28,7 @@ describe("App", () => {
         });
 
         it("Adds a new gift to `state`", () => {
-            expect(app.state().gifts).toEqual([{ id: 1 }]);
+            expect(app.state().gifts).toEqual([{ id }]);
         });
 
         it("Adds a new gift to the rendered list", () => {
@@ -36,6 +37,30 @@ describe("App", () => {
 
         it("Creates a Gift component", () => {
             expect(app.find("Gift").exists()).toBe(true)
+        });
+
+        describe("And the user wants to remove the added gift", () => {
+            beforeEach(() => {
+                app.instance().removeGift(id)
+            });
+
+            it("Removes the gift from state", () => {
+                expect(app.state().gifts).toEqual([]);
+            })
+        })
+
+        describe("getLastGift", () => {
+            describe("Given an empty array", () => {
+                it("return 0", () => {
+                    expect(app.instance().getLastGiftId([])).toEqual(0)
+                });
+            });
+
+            describe("Given an array of numbers", () => {
+                it("return the last Gift Index", () => {
+                    expect(app.instance().getLastGiftId([{ id: 1 }, { id: 2 }])).toEqual(2)
+                })
+            })
         })
     })
 
